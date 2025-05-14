@@ -1,0 +1,50 @@
+http:
+  port: 8085
+
+apiEndpoints:
+  public-auth:
+    host: "*"
+    path: /api/auth/*
+    methods: POST
+    secured: false
+
+  secure-notes:
+    host: "*"
+    path: /api/*
+    methods: GET,POST,PUT,DELETE
+    secured: false     # auth done in the service
+
+serviceEndpoints:
+  notes-service:
+    url: http://localhost:5000
+
+policies:
+  - cors
+  - proxy
+
+pipelines:
+  auth:
+    apiEndpoints:
+      - public-auth
+    policies:
+      - cors:
+          action:
+            origin: "*"
+            methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
+            allowedHeaders: "*"
+      - proxy:
+          action:
+            serviceEndpoint: notes-service
+
+  default:
+    apiEndpoints:
+      - secure-notes
+    policies:
+      - cors:
+          action:
+            origin: "*"
+            methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
+            allowedHeaders: "*"
+      - proxy:
+          action:
+            serviceEndpoint: notes-service
