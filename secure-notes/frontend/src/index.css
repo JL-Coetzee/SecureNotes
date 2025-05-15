@@ -1,0 +1,134 @@
+/* index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-color-light: #ffffff;
+  --text-color-light: #000000;
+  --bg-color-dark: #1c1c1c;
+  --text-color-dark: #ffffff;
+}
+
+body {
+  background-color: var(--bg-color-light);
+  color: var(--text-color-light);
+  transition: background-color 0.3s, color 0.3s;
+  height: 100%;
+  margin: 0;
+}
+
+body.dark {
+  background-color: var(--bg-color-dark);
+  color: var(--text-color-dark);
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, and Opera */
+}
+
+/* Global Scrollbar Styles */
+
+/* For WebKit Browsers (Chrome, Safari, Edge) */
+.gallery::-webkit-scrollbar {
+  height: 12px;
+  /* Thickness of the scrollbar */
+}
+
+.gallery::-webkit-scrollbar-track {
+  background: transparent;
+  /* Optional: Background of the scrollbar track */
+}
+
+.gallery::-webkit-scrollbar-thumb {
+  background-color: #a855f7;
+  /* Purple color */
+  border-radius: 6px;
+  border: 3px solid transparent;
+  /* Adds padding around the thumb */
+  background-clip: padding-box;
+  /* Ensures the border doesn't affect the thumb */
+}
+
+/* For Firefox */
+.gallery {
+  scrollbar-width: thin;
+  /* Makes the scrollbar thinner */
+  scrollbar-color: #a855f7 transparent;
+  /* Thumb color and track color */
+}
+
+/* Additional Global Styles */
+
+/* Ensure all elements use border-box */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Sub-menu Transition */
+.sub-menu {
+  overflow: hidden;
+  transition: height 300ms;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .responsive-padding {
+    padding: 1rem;
+  }
+
+  .responsive-heading {
+    font-size: 1.5rem;
+  }
+
+  .responsive-subheading {
+    font-size: 1.25rem;
+  }
+
+  .responsive-paragraph {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .responsive-padding {
+    padding: 2rem;
+  }
+
+  .responsive-heading {
+    font-size: 2rem;
+  }
+
+  .responsive-subheading {
+    font-size: 1.75rem;
+  }
+
+  .responsive-paragraph {
+    font-size: 1rem;
+  }
+}
+
+/* Focus Styles for Accessibility */
+button:focus,
+a:focus,
+input:focus,
+textarea:focus {
+  outline: 0px solid #00ff8c;
+  /* Customize as per theme */
+  outline-offset: 2px;
+}

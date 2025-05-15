@@ -4,19 +4,29 @@ http:
 apiEndpoints:
   public-auth:
     host: "*"
-    path: /api/auth/*
-    methods: POST
+    paths:
+      - "/api/auth/*"
+    methods:
+      - "POST"
+      - "OPTIONS"
     secured: false
 
   secure-notes:
     host: "*"
-    path: /api/*
-    methods: GET,POST,PUT,DELETE
-    secured: false     # auth done in the service
+    paths:
+      - "/api/*"
+    methods:
+      - "GET"
+      - "POST"
+      - "PUT"
+      - "PATCH"
+      - "DELETE"
+      - "OPTIONS"
+    secured: false
 
 serviceEndpoints:
   notes-service:
-    url: http://localhost:5000
+    url: "http://localhost:5000"
 
 policies:
   - cors
@@ -28,23 +38,37 @@ pipelines:
       - public-auth
     policies:
       - cors:
-          action:
-            origin: "*"
-            methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
-            allowedHeaders: "*"
+          - action:
+              origin:
+                - "http://localhost:5173"
+              methods:
+                - "POST"
+                - "OPTIONS"
+              allowedHeaders:
+                - "*"
+              credentials: true
       - proxy:
-          action:
-            serviceEndpoint: notes-service
+          - action:
+              serviceEndpoint: notes-service
 
   default:
     apiEndpoints:
       - secure-notes
     policies:
       - cors:
-          action:
-            origin: "*"
-            methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
-            allowedHeaders: "*"
+          - action:
+              origin:
+                - "http://localhost:5173"
+              methods:
+                - "GET"
+                - "POST"
+                - "PUT"
+                - "PATCH"
+                - "DELETE"
+                - "OPTIONS"
+              allowedHeaders:
+                - "*"
+              credentials: true
       - proxy:
-          action:
-            serviceEndpoint: notes-service
+          - action:
+              serviceEndpoint: notes-service

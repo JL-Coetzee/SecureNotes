@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    /* Target modern browsers—no need to down-transpile all the way to ES5 */
+    "target": "ESNext",
+
+    /* Keep DOM types plus latest ES features */
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+
+    /* Skip deep type-checking in node_modules (speeds up TS) */
+    "skipLibCheck": true,
+
+    /* Allow default imports from modules with no default export */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    /* Enable the strictest type-checking options you already have */
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Match Vite’s ESM output */
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+
+    /* Needed for .tsx files in CRA → Vite migrations,
+       but you can leave it true for safety */
+    "isolatedModules": true,
+    "noEmit": true,
+
+    /* Use the new React 17+ JSX transform */
+    "jsx": "react-jsx",
+
+    /* OPTIONAL: enable absolute imports from /src via '@/...' */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
+    /* OPTIONAL: include Vite’s types */
+    "types": ["vite/client", "node"]
+  },
+  "include": ["src"]
+}
