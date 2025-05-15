@@ -1,0 +1,78 @@
+########################
+#  VOLUMES & NETWORKS  #
+########################
+volumes:
+  mongo-data:        # persistent DB storage
+
+networks:
+  app-net:
+    driver: bridge
+
+################
+#  SERVICES   #
+################
+services:
+  # 1️⃣  Database
+  mongo:
+    image: mongo:6.0
+    container_name: secure-notes-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: secure-notes
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"        # optional – expose only if you still use Compass etc.
+    networks:
+      - app-net
+
+  # 2️⃣  Secure-Notes microservice
+  secure-notes:
+    build:
+      context: .           # assumes a Dockerfile inside /src
+      dockerfile: Dockerfile
+    container_name: secure-notes-api
+    restart: always
+    env_file:
+      - .env                   # JWT_SECRET, etc.
+    environment:
+      PORT: 5000
+      MONGODB_URI: mongodb://mongo:27017/secure-notes
+    depends_on:
+      - mongo
+    ports:
+      - "5000:5000"
+    networks:
+      - app-net
+
+  # 3️⃣  Express-Gateway
+  gateway:
+    build:
+      context: ./secure-notes-gw
+      dockerfile: Dockerfile   # add one there if you haven’t yet
+    container_name: secure-notes-gateway
+    restart: always
+    environment:
+      EG_CONFIG_DIR: /usr/src/app/config   # default, but explicit
+    depends_on:
+      - secure-notes
+    ports:
+      - "8085:8085"
+    networks:
+      - app-net
+
+  # 4️⃣  Prometheus
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"
+    depends_on:
+      - secure-notes
+    networks:
+      - app-net
