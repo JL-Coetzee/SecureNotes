@@ -12,6 +12,25 @@ networks:
 #  SERVICES   #
 ################
 services:
+
+  # 0️⃣  Frontend (optional)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Must match your vite .env file or your local dev value
+        VITE_API_URL: "http://localhost:8085/api"
+    image: secure-notes-frontend:latest
+    container_name: secure-notes-frontend
+    ports:
+      - "5173:80"          # Host 5173 → container 80 (Nginx)
+    networks:
+      - app-net
+    depends_on:
+      - gateway
+
+
   # 1️⃣  Database
   mongo:
     image: mongo:6.0
