@@ -2,15 +2,15 @@
 
 logger:
   level: debug
-  
+
 db:
   redis:
     emulate: true
     namespace: EG
 
 #plugins:
-  # express-gateway-plugin-example:
-  #   param1: 'param from system.config' 
+# express-gateway-plugin-example:
+#   param1: 'param from system.config'
 
 crypto:
   cipherKey: sensitiveKey
