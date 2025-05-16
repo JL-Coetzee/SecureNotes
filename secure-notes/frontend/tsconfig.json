@@ -22,8 +22,7 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
 
-    /* Needed for .tsx files in CRA → Vite migrations,
-       but you can leave it true for safety */
+    /* Needed for .tsx files in CRA → Vite migrations */
     "isolatedModules": true,
     "noEmit": true,
 
@@ -36,7 +35,7 @@
       "@/*": ["src/*"]
     },
 
-    /* OPTIONAL: include Vite’s types */
+    /*include Vite’s types */
     "types": ["vite/client", "node"]
   },
   "include": ["src"]

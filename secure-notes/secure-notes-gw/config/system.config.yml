@@ -17,7 +17,7 @@ crypto:
   algorithm: aes256
   saltRounds: 10
 
-# OAuth2 Settings
+
 session:
   secret: keyboard cat
   resave: false

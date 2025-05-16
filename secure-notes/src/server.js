@@ -19,7 +19,7 @@ const httpHistogram = new prom.Histogram({
   labelNames: ["method", "route", "status"],
 });
 
-// ── Instantiate your Express app ──────────────────────────────────────
+// ── Instantiate Express app ──────────────────────────────────────
 const app = express();
 
 app.use((req, res, next) => {
